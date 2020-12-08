@@ -1,13 +1,15 @@
 # Big Data Architecture and Application - League of Legends eSport Stats
 
-Name: Ya-Han Cheng (cnetid: yahancheng)
+* Name: Ya-Han Cheng (yahancheng)
 
-Student ID: 12244327
+* Serving layer LoadBalancer: http://mpcs53014-loadbalancer-217964685.us-east-2.elb.amazonaws.com:3579/profession-lol.html
+
+* Speed layer LoadBalancer: http://mpcs53014-loadbalancer-217964685.us-east-2.elb.amazonaws.com:3579/submit-game.html
 
 
 ## Overview
 
-According to estimates, global eSports market revenue will reach almost 1.6 billion U.S. dollars in 2023. The eSports industry is expected to grow rapidly in the coming years. In this project, one of the most popular MOBA game (multiplayer online battle arena) - League of Legends, which has approximately 70 million users worldwide.
+According to estimates, global eSports market revenue will reach almost 1.6 billion U.S. dollars in 2023. The eSports industry is expected to grow rapidly in the coming years. This project applies big data technique to analyze one of the most popular MOBA game (multiplayer online battle arena) - League of Legends, which has approximately 70 million users worldwide.
 
 
 In League of Legends, for each game, ten players are split into two teams of five, Blue side and Red side. The ultimate goal of this game is to tear down the other team's towers (turret) and destroy the base (nexus).
@@ -112,7 +114,7 @@ hdfs dfs -cat /tmp/yahancheng/final/filename.gz | gunzip | hdfs dfs -put - /tmp/
 
 ### Batch Layer
 
-After ingesting to HDFS, I used **final-create-hive-table.hql** to ingest data to Hive. In Hive, I cleaned datasets (with **final-data-cleaning.hql**) and connected to Hbase (with **final-data-cleaning.hql**) to form batch layer. The goal of data cleaning and concatenating is to form a batch layer which we can search the row by the side and the 4 early game indicators.
+After ingesting to HDFS, I used **`data-cleaning-and-ingestion/final-create-hive-table.hql`** to ingest data to Hive. In Hive, I cleaned datasets (with **`final-data-cleaning.hql`**) and connected to Hbase (with **final-data-cleaning.hql**) to form batch layer. The goal of data cleaning and concatenating is to form a batch layer which users can search the row by the side and the 4 early game indicators.
 
 
 Final schema of batch layer:
@@ -158,13 +160,13 @@ Column description:
 
 * challenger-/grandmaster-/master-TotalGames: number of games in challenger/grandmaster/master rank
 
-Data is stored in `yahancheng_final_combine` table in Hbase.
+Data stored in `yahancheng_final_combine` table in Hbase.
 
 
 
 ### Serving Layer
 
-With serving layer, users can query data from Hbase table with inputs. The serving process is managed by the first part of **app.js**, and the web interface is handled by **profession-lol.html**. Both can be found in `src/public` folder.
+With serving layer, users can query data from Hbase table with inputs. The serving process is managed by the first part of **`profession-lol/src/app.js`**, and the web interface is handled by **profession-lol.html**, which can be found in **`profession-lol/src/public`** folder.
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/startingPage.png" alt="Figure 7, Starting page of the serving layer" width="800"/>
@@ -182,7 +184,7 @@ The result table below shows the game stats by patches. Instead of year and mont
 
 ### Speed Layer
 
-Since my dataset does not have real-time ingestion, here I use a web page and Kafka message queue to increment user submitted new game data. The speed layer is managed by the rest part of **app.js** and `finalSpeedLayer` folder, and the web interface of speed layer is handled by **submit-game.html**.
+Since my dataset does not have real-time ingestion, here I use a web page and Kafka message queue to increment user submitted new game data. The speed layer is managed by the rest part of **app.js** and `finalSpeedLayer` folder, and the web interface of speed layer is handled by **submit-game.html**, which can be found in **`profession-lol/src/public`** folder.
 
 
 Data streaming process is written in scala. Schema of submitted game data:
@@ -203,7 +205,7 @@ case class GameReport(
     patch: Long)
 ```
 
-In **StreamGames.scala**, new data is incremented to Hbase table.
+In **`finalSpeedLayer/src/main/scala/StreamGames.scala`**, new data is incremented to Hbase table by:
 
 ```
   def incrementGameData(kgr : GameReport) : String = {
