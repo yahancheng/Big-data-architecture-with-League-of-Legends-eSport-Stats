@@ -1,0 +1,66 @@
+
+# Data Ingestion Process
+## professional Match
+year=2014
+while [ $year -le 2020 ]
+do  
+    cat(year)
+    curl https://oracleselixir-downloadable-match-data.s3-us-west-2.amazonaws.com/$year_LoL_esports_match_data_from_OraclesElixir_20201123.csv | hdfs dfs -put - /tmp/yahancheng/final/profession_$year.csv
+    (( year++ ))
+done
+
+
+## download challenger dataset
+curl 'https://storage.googleapis.com/kaggle-data-sets/610763/1096497/compressed/Challenger_Ranked_Games.csv.zip?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20201123%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20201123T171506Z&X-Goog-Expires=259199&X-Goog-SignedHeaders=host&X-Goog-Signature=1d8efb8c5b21af2039a9ef23d4a7055d5dad9d5918c5230f86d23c0fd21ddf8ea6bf0f762c5fcb73f05cfca97e219cef7c165f50e8633c8cb49dcddc109f74d02eb3a02464af8b7bc1df427043ee5fac321c4e8aaaf114b6c0b1bc5b5919bc958ebfdc35624a448ff8846d9bc76823dbb822fca107e99824905b057c9f208c4e54775af5584f9a17877517b67d8fb0dd43c5d82750ac5c3caf339eeaad0752b9fb46991f3e76bd33e2887d26468ca04f4b9cb186f212c8f92ef05ab8203cb46311834efe5b820f9e2fe863e2afaee421c59ddc4f7e382a3a748cc0a1aef9a51118885549e901709962bc4e8f46ec5840af2d4b8779aea678cc3d0634cacdeca2' \
+  -H 'authority: storage.googleapis.com' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'dnt: 1' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'sec-fetch-site: cross-site' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'sec-fetch-dest: document' \
+  -H 'referer: https://www.kaggle.com/' \
+  -H 'accept-language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6' \
+  --compressed | hdfs dfs -put - /tmp/yahancheng/final/challenger.gz
+
+## unzip gz file
+  hdfs dfs -cat /tmp/yahancheng/final/challenger.gz | gunzip | hdfs dfs -put - /tmp/yahancheng/final/challenger.csv
+
+## download grandMaster dataset
+  curl 'https://storage.googleapis.com/kaggle-data-sets/610763/1096497/compressed/GrandMaster_Ranked_Games.csv.zip?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20201123%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20201123T175438Z&X-Goog-Expires=259199&X-Goog-SignedHeaders=host&X-Goog-Signature=322331178448fbe1b65f95347900654ef0fa93e8678e2c648cab6423edea5a6ea9a9a8efdc0a03af2b1a0ad7372abac993f8d43fb81f5a2b4f4b82e72bee9e6713b23b5c35e2187c2ccb30f0bf35e1af29b39ebc57c85596604c8b41310958fc30486710f510445e3ff9dbbc0560f421e64308fcdab18dbfca3b407449f40e00754ed1b189d0ab311b5d72b31cf3dba8591ecbb632e004382950dd7bc83581b0b874c4ee3fc1cefc5a2ef4b7dcf534d7328bc01fc5b066fdc539204d63f817d1baf8c741a93249715cca3e5ef7518f32d08873700ab6c25640790bcbe8c144e943df709ccba37b38b9892362c09067fa4bf8f8d8cb069cc6731dcf439ead8068' \
+  -H 'authority: storage.googleapis.com' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'dnt: 1' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'sec-fetch-site: cross-site' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'sec-fetch-dest: document' \
+  -H 'referer: https://www.kaggle.com/' \
+  -H 'accept-language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6' \
+  --compressed | hdfs dfs -put - /tmp/yahancheng/final/grandMaster.gz
+
+## unzip gz file
+  hdfs dfs -cat /tmp/yahancheng/final/grandMaster.gz | gunzip | hdfs dfs -put - /tmp/yahancheng/final/grandMaster.csv
+
+
+## download master dataset
+  curl 'https://storage.googleapis.com/kaggle-data-sets/610763/1096497/compressed/Master_Ranked_Games.csv.zip?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20201123%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20201123T175733Z&X-Goog-Expires=259199&X-Goog-SignedHeaders=host&X-Goog-Signature=a0bfe1043d1ac5ad2f002a643376b7f9cfd3f59f2941372c990e1df71c70873bffce0342240755179377f248ea36af39d105a06544377941ea424dfd626eb4e082f99cf3f672525c5906ede85bc5dca34101fab19a551ccfe5c207e3383ed279eaa1d75cd06a84ed589a302ea5fbd9b2e1c8aa9d75d5f3ae04aed08a420fcd88dddaacf3039395282b15db76f4123cca0c0e57c3c096b974befd4597ab1b58a1e05c2bdd94e19ae05866d2a5ef052e2b89b3b97f3693517c8289639cac1f95d4ef82490b2df1f5511f2cb76df679b8b53953fee7b2677a835d4e4fd629e2b711a9f96a11bc199bdc0fca0c47a7ea0d35d9cb923d244025ae84ce6bf02f659a32' \
+  -H 'authority: storage.googleapis.com' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'dnt: 1' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'sec-fetch-site: cross-site' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'sec-fetch-dest: document' \
+  -H 'referer: https://www.kaggle.com/' \
+  -H 'accept-language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6' \
+  --compressed | hdfs dfs -put - /tmp/yahancheng/final/master.gz
+
+## unzip gz file
+  hdfs dfs -cat /tmp/yahancheng/final/master.gz | gunzip | hdfs dfs -put - /tmp/yahancheng/final/master.csv

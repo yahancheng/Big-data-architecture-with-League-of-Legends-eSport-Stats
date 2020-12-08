@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+<head>
+    <title>Submit Game Record</title>
+    <link type="text/css" rel="stylesheet" href="/elegant-aero.css" />
+</head>
+<!-- Thanks to Mario C. E. Freese <mcefreese@gmail.com> for permission to use background image -->
+<body style='background-image:URL("217097.jpg");background-size: 100% 100%;background-repeat:no-repeat;background-position:0% 0%;'>
+<p style="margin-bottom:1cm"/>
+<h2 class="elegant-aero" style="margin-left:30%;text-align:center;display:inline-block;color:#5E5E5E;background:#FFFFFF">&nbsp;Submit Game Report&nbsp;</h2>
+<form action="/game.html" style="background:#FFFFFF;width:40%;margin:auto"  method="get" class="elegant-aero">
+
+    <label>
+        <span>Side:</span><select name="side">
+        <option value ="Blue">Blue</option>
+        <option value ="Red">Red</option>
+    </select>
+    </label>
+    <label>
+        <span>Your side got first blood?</span><select name="first_blood">
+        <option value ="1">Yes</option>
+        <option value ="0">No</option>
+    </select>
+    </label>
+    <label>
+        <span>Your side got first tower?</span><select name="first_tower">
+        <option value ="1">Yes</option>
+        <option value ="0">No</option>
+    </select>
+    </label>
+    <label>
+        <span>Your side got first dragon?</span><select name="first_dragon">
+        <option value ="1">Yes</option>
+        <option value ="0">No</option>
+    </select>
+    </label>
+    <label>
+        <span>Your side got first baron:</span><select name="first_baron">
+        <option value ="1">Yes</option>
+        <option value ="0">No</option>
+    </select>
+    </label>
+    <label>
+        <span>Did your side win?</span><select name="winningGame">
+        <option value ="1">Yes</option>
+        <option value ="0">No</option>
+    </select>
+    </label>
+    <label>
+        <span>Avg damage per minute:</span>
+        <input type="text" name="avg_DPM" />
+    </label>
+    <label>
+        <span>Avg kills per minute:</span>
+        <input type="text" name="avg_KPM" />
+    </label>
+    <label>
+        <span>Total kills on your side in this game:</span>
+        <input type="text" name="total_kills" />
+    </label>
+    <label>
+        <span>Total deaths on your side in this game:</span>
+        <input type="text" name="total_death" />
+    </label>
+    <label>
+        <span>Total assists on your side in this game:</span>
+        <input type="text" name="total_assist" />
+    </label>
+    <label>
+        <span>Patch:</span>
+        <input type="text" name="patch" />
+    </label>
+    <label>
+        <span>&nbsp;</span><input type="submit" value="Submit">
+    </label>
+</form>
+<iframe frameBorder="0" name="results_iframe" style="width:100%"/>
+</body>
+</html>
