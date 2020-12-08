@@ -21,15 +21,15 @@ In League of Legends, for each game, ten players are split into two teams of fiv
 
 In this project, 4 early game indicators are used to predict the winning rate and critical game stats across different patches, which can be applied to forming early game strategies and analyzing patch differences. Indicators include:
 
-* First Blood: the first kill of a game
+* **First Blood**: the first kill of a game
 
-* First Tower: tear down the first tower of a gmae
+* **First Tower**: tear down the first tower of a gmae
 
-and two epic monsters on the map, which can give potentially game-turning advantages to a team that successfully kills them:
+*and two epic monsters on the map, which can give potentially game-turning advantages to a team that successfully kills them:*
 
-* First Dragon: kill the first dragon of a game
+* **First Dragon**: kill the first dragon of a game
 
-* First Baron: kill the first baron of a game
+* **First Baron**: kill the first baron of a game
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/Jungle_map.jpg" alt="Figure 2, Dragon and Baron on the map" width="500"/>
@@ -40,7 +40,7 @@ This application can fetch historical professional game data with these four ind
 
 * Find professional game stats over patches
 
-* with high-elo rank game stats for latest patch
+* High-elo rank game stats for the latest patch
 
 * Ingest statistics for new games to update the database
 
@@ -53,21 +53,23 @@ At the starting page, users can select their side and 4 early game indicators.
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/firstSearch.png" alt="Figure 4, Find the winning rate and game statistics under conditions (early game indicators)" width="800"/>
 
+Find the winning rate and game statistics under conditions (early game indicators)
+
 
 ## Lambda Architecture
 
-This project uses lambda architecture to handle game data by taking advantage of both batch and stream-processing methods. Below is a graph of the structure of Lambda architecture. There are 3 main layers in this big data architecture, batch Layer, serving layer, and speed layer.
+This project uses lambda architecture to handle game data by taking advantage of both batch and stream-processing methods. Below is a graph of the structure of Lambda architecture. There are 3 layers in this big data architecture - **batch Layer**, **serving layer**, and **speed layer**.
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/lambda-architecture.png" alt="Figure 5, Lambda architecture overview" width="500"/>
 
 
-### Preparation
+### Preparation  and Preprocessing
 
-Data sources of this project come from [Oracle's Elixir](https://oracleselixir.com/tools/downloads) and [Kaggle](https://www.kaggle.com/gyejr95/league-of-legends-challenger-ranked-games2020).
+Data sources of this project are from [Oracle's Elixir](https://oracleselixir.com/tools/downloads) and [Kaggle](https://www.kaggle.com/gyejr95/league-of-legends-challenger-ranked-games2020).
 
 Ingestion to HDFS:
 
-* Data from Oracle's Elixir
+* **Data from Oracle's Elixir**
 
 ```
 year=2014
@@ -79,7 +81,7 @@ do
 done
 ```
 
-* Data from Kaggle
+* **Data from Kaggle**
 
 Kaggle URL does not support curl command, so I copied cURL instead, which can be found with developer tool.
 
@@ -114,7 +116,7 @@ hdfs dfs -cat /tmp/yahancheng/final/filename.gz | gunzip | hdfs dfs -put - /tmp/
 
 ### Batch Layer
 
-After ingesting to HDFS, I used **`data-cleaning-and-ingestion/final-create-hive-table.hql`** to ingest data to Hive. In Hive, I cleaned datasets (with **`final-data-cleaning.hql`**) and connected to Hbase (with **final-data-cleaning.hql**) to form batch layer. The goal of data cleaning and concatenating is to form a batch layer which users can search the row by the side and the 4 early game indicators.
+After data ingestion process, I used **`data-cleaning-and-ingestion/final-create-hive-table.hql`** to ingest data from HDFS to Hive. In Hive, I cleaned datasets (with **`final-data-cleaning.hql`**) and connected to Hbase (with **final-data-cleaning.hql**) to build the batch layer. The goal of data cleaning and concatenating is to form a batch layer which users can search the row by the side and the 4 early game indicators.
 
 
 Final schema of batch layer:
@@ -138,27 +140,27 @@ TBLPROPERTIES ('hbase.table.name' = 'yahancheng_final_combine');
 
 Column description:
 
-* userInputRow: side_dummyForFirstBlood_dummyForFirstDragon_dummyForFirstTower_dummyForFirstBaron_patch. For example, if, in patch 8, blue side got first blood and first draong, but lost first tower and baron, the input would be `Blue_1_1_0_0_8`.
+* **userInputRow**: side_firstBlood(dummy)_firstDragon_firstTower_firstBaron_patch. For example, if, in patch 8, blue side got first blood and first draong, but lost first tower and baron, the input would be `Blue_1_1_0_0_8`.
 
-* patch: big patch. For example, 10.23 & 10.1 will both be 10. 9.24 will be 9.
+* **patch**: big patch. For example, 10.23 & 10.1 will both be 10. 9.24 will be 9.
 
-* winningGames: number of winning games
+* **winningGames**: number of winning games
 
-* totalGames: number of games
+* **totalGames**: number of games
 
-* totalKills: sum of total kills in every games
+* **totalKills**: sum of total kills in every games
 
-* totalDeath: sum of total deaths in every games
+* **totalDeath**: sum of total deaths in every games
 
-* totalAssists: sum of total assists in every games
+* **totalAssists**: sum of total assists in every games
 
-* totalAvgKPM: sum of average team kills per minute
+* **totalAvgKPM**: sum of average team kills per minute
 
-* totalAvgDPM: sum of average team damage per minute
+* **totalAvgDPM**: sum of average team damage per minute
 
-* challenger-/grandmaster-/master-WinningGames: number of winning games in challenger/grandmaster/master rank
+* **challenger-/grandmaster-/master-WinningGames**: number of winning games in challenger/grandmaster/master rank
 
-* challenger-/grandmaster-/master-TotalGames: number of games in challenger/grandmaster/master rank
+* **challenger-/grandmaster-/master-TotalGames**: number of games in challenger/grandmaster/master rank
 
 Data stored in `yahancheng_final_combine` table in Hbase.
 
