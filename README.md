@@ -13,7 +13,7 @@ According to estimates, global eSports market revenue will reach almost 1.6 bill
 In League of Legends, for each game, ten players are split into two teams of five, Blue side and Red side. The ultimate goal of this game is to tear down the other team's towers (turret) and destroy the base (nexus).
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/A-Map-of-the-League-of-Legends-game-play-in-the-classic-mode.png" alt="Figure 1, LOL map" width="450"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/A-Map-of-the-League-of-Legends-game-play-in-the-classic-mode.png" alt="Figure 1, LOL map" width="500"/>
 
 
 
@@ -30,7 +30,7 @@ and two epic monsters on the map, which can give potentially game-turning advant
 * First Baron: kill the first baron of a game
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/Jungle_map.jpg" alt="Figure 2, Dragon and Baron on the map" width="450"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/Jungle_map.jpg" alt="Figure 2, Dragon and Baron on the map" width="500"/>
 
 
 
@@ -43,20 +43,20 @@ This application can fetch historical professional game data with these four ind
 * Ingest statistics for new games to update the database
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/startingPage.png" alt="Figure 3, Starting page of the application" width="450"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/startingPage.png" alt="Figure 3, Starting page of the application" width="700"/>
 
 
 At the starting page, users can select their side and 4 early game indicators.
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/firstSearch.png" alt="Figure 4, Find the winning rate and game statistics under conditions (early game indicators)" width="550"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/firstSearch.png" alt="Figure 4, Find the winning rate and game statistics under conditions (early game indicators)" width="700"/>
 
 
 ## Lambda Architecture
 
 This project uses lambda architecture to handle game data by taking advantage of both batch and stream-processing methods. Below is a graph of the structure of Lambda architecture. There are 3 main layers in this big data architecture, batch Layer, serving layer, and speed layer.
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/lambda-architecture.png" alt="Figure 5, Lambda architecture overview" width="400"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/lambda-architecture.png" alt="Figure 5, Lambda architecture overview" width="500"/>
 
 
 ### Preparation
@@ -81,7 +81,7 @@ done
 
 Kaggle URL does not support curl command, so I copied cURL instead, which can be found with developer tool.
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/kaggle-data.png" alt="Figure 6, Curl data from Kaggle" width="550"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/kaggle-data.png" alt="Figure 6, Curl data from Kaggle" width="700"/>
 
 
 Use cURL to ingest to hdfs directly.
@@ -167,13 +167,13 @@ Data is stored in `yahancheng_final_combine` table in Hbase.
 With serving layer, users can query data from Hbase table with inputs. The serving process is managed by the first part of **app.js**, and the web interface is handled by **profession-lol.html**. Both can be found in `src/public` folder.
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/startingPage.png" alt="Figure 7, Starting page of the serving layer" width="550"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/startingPage.png" alt="Figure 7, Starting page of the serving layer" width="700"/>
 
 
 Select side and early game indicators, click submit. 
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/firstSearch.png" alt="Figure 8, Query result" width="550"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/firstSearch.png" alt="Figure 8, Query result" width="700"/>
 
 
 The result table below shows the game stats by patches. Instead of year and month, patch is a more informative factor in game strategy analysis.
@@ -222,19 +222,19 @@ In **StreamGames.scala**, new data is incremented to Hbase table.
 
 Interfaces:
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/origin-stats.png" alt="Figure 9, Stats before increment" width="550"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/origin-stats.png" alt="Figure 9, Stats before increment" width="700"/>
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/submit-game.png" alt="Figure 10, Submit a new game" width="550"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/submit-game.png" alt="Figure 10, Submit a new game" width="700"/>
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/kafka-message-queue.png" alt="Figure 11, New game is added to Kafka message queue" width="350"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/kafka-message-queue.png" alt="Figure 11, New game is added to Kafka message queue" width="550"/>
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/spark-streaming.png" alt="Figure 12, Spark streaming new record to Hbase table" width="350"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/spark-streaming.png" alt="Figure 12, Spark streaming new record to Hbase table" width="550"/>
 
 
-<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/stats-change.png" alt="Figure 13, Query result update immidiately" width="350"/>
+<img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/stats-change.png" alt="Figure 13, Query result update immidiately" width="700"/>
 
 
 
