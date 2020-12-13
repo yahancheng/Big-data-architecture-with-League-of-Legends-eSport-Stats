@@ -16,7 +16,7 @@ In League of Legends, for each game, ten players are split into two teams of fiv
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/A-Map-of-the-League-of-Legends-game-play-in-the-classic-mode.png" alt="Figure 1, LOL map" width="500"/>
-*Figure 1, LOL map*
+*Figure 1, LOL map
 
 
 In this project, 4 early game indicators are used to predict the winning rate and critical game stats across different patches, which can be applied to forming early game strategies and analyzing patch differences. Indicators include:
