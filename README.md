@@ -16,7 +16,7 @@ In League of Legends, for each game, ten players are split into two teams of fiv
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/A-Map-of-the-League-of-Legends-game-play-in-the-classic-mode.png" alt="Figure 1, LOL map" width="500"/>
-*Figure 1, LOL map
+
 
 
 In this project, 4 early game indicators are used to predict the winning rate and critical game stats across different patches, which can be applied to forming early game strategies and analyzing patch differences. Indicators include:
@@ -33,7 +33,6 @@ In this project, 4 early game indicators are used to predict the winning rate an
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/Jungle_map.jpg" alt="Figure 2, Dragon and Baron on the map" width="500"/>
-*Figure 2, Dragon and Baron on the map*
 
 
 This application can fetch historical professional game data with these four indicators. There are 3 main features in this app. Users can
@@ -46,14 +45,12 @@ This application can fetch historical professional game data with these four ind
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/startingPage.png" alt="Figure 3, Starting page of the application" width="800"/>
-*Figure 3, Starting page of the application*
 
 
 At the starting page, users can select their side and 4 early game indicators.
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/firstSearch.png" alt="Figure 4, Find the winning rate and game statistics under conditions (early game indicators)" width="800"/>
-*Figure 4, Find the winning rate and game statistics under conditions (early game indicators)*
 
 
 Find the winning rate and game statistics under conditions (early game indicators)
@@ -64,7 +61,6 @@ Find the winning rate and game statistics under conditions (early game indicator
 This project uses lambda architecture to handle game data by taking advantage of both batch and stream-processing methods. Below is a graph of the structure of Lambda architecture. There are 3 layers in this big data architecture - **batch Layer**, **serving layer**, and **speed layer**.
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/lambda-architecture.png" alt="Figure 5, Lambda architecture overview" width="500"/>
-*Figure 5, Lambda architecture overview*
 
 
 ### Preparation  and Preprocessing
@@ -90,7 +86,6 @@ done
 Kaggle URL does not support curl command, so I copied cURL instead, which can be found with developer tool.
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/kaggle-data.png" alt="Figure 6, Curl data from Kaggle" width="800"/>
-*Figure 6, Curl data from Kaggle*
 
 
 Use cURL to ingest to hdfs directly.
@@ -177,14 +172,12 @@ With serving layer, users can query data from Hbase table with inputs. The servi
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/startingPage.png" alt="Figure 7, Starting page of the serving layer" width="800"/>
-*Figure 7, Starting page of the serving layer*
 
 
 Select side and early game indicators, click submit. 
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/firstSearch.png" alt="Figure 8, Query result" width="800"/>
-*Figure 8, Query result*
 
 
 The result table below shows the game stats by patches. Instead of year and month, patch is a more informative factor in game strategy analysis.
@@ -234,23 +227,19 @@ In **`finalSpeedLayer/src/main/scala/StreamGames.scala`**, new data is increment
 Interfaces:
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/origin-stats.png" alt="Figure 9, Stats before increment" width="800"/>
-*Figure 9, Stats before increment*
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/submit-game.png" alt="Figure 10, Submit a new game" width="800"/>
-*Figure 10, Submit a new game*
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/kafka-message-queue.png" alt="Figure 11, New game is added to Kafka message queue" width="550"/>
-*Figure 11, New game is added to Kafka message queue*
+
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/spark-streaming.png" alt="Figure 12, Spark streaming new record to Hbase table" width="550"/>
-*Figure 12, Spark streaming new record to Hbase table*
 
 
 <img src="https://github.com/yahancheng/Big-data-architecture-with-League-of-Legends-eSport-Stats/blob/main/screenshot/stats-change.png" alt="Figure 13, Query result update immidiately" width="800"/>
-*Figure 13, Query result update immidiately*
 
 
 
