@@ -2,10 +2,6 @@
 
 * Name: Ya-Han Cheng (yahancheng)
 
-* Serving layer LoadBalancer: http://mpcs53014-loadbalancer-217964685.us-east-2.elb.amazonaws.com:3579/profession-lol.html
-
-* Speed layer LoadBalancer: http://mpcs53014-loadbalancer-217964685.us-east-2.elb.amazonaws.com:3579/submit-game.html
-
 
 ## Overview
 
@@ -248,3 +244,9 @@ Interfaces:
 https://www.researchgate.net/figure/A-Map-of-the-League-of-Legends-game-play-in-the-classic-mode_fig1_319839481
 
 https://leagueoflegends.fandom.com/wiki/Jungling
+
+Original deploy address:
+
+* Serving layer LoadBalancer: http://mpcs53014-loadbalancer-217964685.us-east-2.elb.amazonaws.com:3579/profession-lol.html (stop working)
+
+* Speed layer LoadBalancer: http://mpcs53014-loadbalancer-217964685.us-east-2.elb.amazonaws.com:3579/submit-game.html (stop working)
